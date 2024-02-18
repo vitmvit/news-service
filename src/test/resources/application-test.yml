@@ -1,0 +1,17 @@
+cache:
+  algorithm: lfu
+  capacity: 15
+
+spring:
+  datasource:
+    username: test
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: create
+  liquibase:
+    enabled: false
+
+app:
+  news-service:
+    url: http://localhost:8082/

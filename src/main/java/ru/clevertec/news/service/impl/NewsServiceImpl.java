@@ -45,6 +45,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Page<NewsDto> findAll(Integer offset, Integer limit) {
         Page<News> newsPage = newsRepository.findAll(PageRequest.of(offset, limit));
+        newsPage.stream().findAny().orElseThrow(EmptyListException::new);
         return newsPage.map(newsConverter::convert);
     }
 

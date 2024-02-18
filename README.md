@@ -2,7 +2,9 @@
 
 Данный микросервис работает с новостями
 
-Реалиазация
+## Swagger
+
+http://localhost:8083/api/doc/swagger-ui/index.html#/
 
 ## Реализация:
 
