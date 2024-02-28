@@ -7,17 +7,19 @@ import ru.clevertec.news.dto.update.NewsUpdateDto;
 
 public interface NewsService {
 
-    NewsDto findById(Long id);
+ NewsDto findNewsById(Long id);
 
-    Page<NewsDto> findAll(Integer offset, Integer limit);
+    NewsDto findNewsByIdWithComments(Integer offset, Integer limit, Long id);
 
-    Page<NewsDto> searchByText(Integer offset, Integer limit, String fragment);
+    Page<NewsDto> findAllNews(Integer offset, Integer limit);
 
-    Page<NewsDto> searchByTitle(Integer offset, Integer limit, String fragment);
+    Page<NewsDto> searchNewsByText(Integer offset, Integer limit, String fragment);
 
-    NewsDto create(NewsCreateDto dto);
+    Page<NewsDto> searchNewsByTitle(Integer offset, Integer limit, String fragment);
 
-    NewsDto update(NewsUpdateDto dto);
+    NewsDto createNews(NewsCreateDto dto);
 
-    void delete(Long id);
+    NewsDto updateNews(NewsUpdateDto dto);
+
+    void deleteNews(Long id);
 }

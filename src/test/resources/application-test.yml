@@ -11,7 +11,3 @@ spring:
       ddl-auto: create
   liquibase:
     enabled: false
-
-app:
-  news-service:
-    url: http://localhost:8082/

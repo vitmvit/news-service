@@ -18,8 +18,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-springdoc:
-  swagger-ui:
-    enabled: true
-    path: /api/doc/

@@ -19,22 +19,22 @@ public class NewsProxyService {
         return super.hashCode();
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.findById(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.findNewsById(..)))")
     public void getMethod() {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.create(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.createNews(..)))")
     public void createMethod() {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.update(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.updateNews(..)))")
     public void updateMethod() {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.delete(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.deleteNews(..)))")
     public void deleteMethod() {
 
     }

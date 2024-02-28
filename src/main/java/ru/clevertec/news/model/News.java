@@ -10,6 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+/**
+ * Модель новости
+ */
 @Entity
 @Getter
 @Setter
@@ -29,4 +32,5 @@ public class News {
     private String title;
 
     private String text;
+    private Long userId;
 }

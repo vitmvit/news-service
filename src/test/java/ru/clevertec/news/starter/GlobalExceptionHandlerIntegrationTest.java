@@ -30,7 +30,7 @@ public class GlobalExceptionHandlerIntegrationTest {
     public void testHandleEntityNotFoundException() throws Exception {
         Long id = 1L;
 
-        when(newsService.findById(id)).thenThrow(new EntityNotFoundException());
+        when(newsService.findNewsByIdWithComments(OFFSET, LIMIT, id)).thenThrow(new EntityNotFoundException());
 
         mockMvc.perform(get("/api/news/" + id))
                 .andExpect(MvcResult::getResolvedException).getClass().equals(EntityNotFoundException.class);
@@ -38,7 +38,7 @@ public class GlobalExceptionHandlerIntegrationTest {
 
     @Test
     public void testHandleEmptyListException() throws Exception {
-        when(newsService.findAll(OFFSET, LIMIT)).thenThrow(new EmptyListException());
+        when(newsService.findAllNews(OFFSET, LIMIT)).thenThrow(new EmptyListException());
 
         mockMvc.perform(get("/api/news/", "?limit=" + LIMIT + "&offset=" + OFFSET))
                 .andExpect(MvcResult::getResolvedException).getClass().equals(EmptyListException.class);

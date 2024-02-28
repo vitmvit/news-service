@@ -28,22 +28,23 @@ public class NewsTestBuilder {
     @Builder.Default
     private List<CommentDto> commentDtoList = List.of();
 
+    @Builder.Default
+    private Long userId = 1L;
+
     public News buildNews() {
-        return new News(id, time, title, text);
+        return new News(id, time, title, text, userId);
     }
 
     public NewsDto buildNewsDto() {
-        return new NewsDto(id, time, title, text, commentDtoList);
+        return new NewsDto(id, time, title, text, commentDtoList, userId);
     }
 
     public NewsCreateDto buildNewsCreateDto() {
-        return new NewsCreateDto(title, text);
+        return new NewsCreateDto(title, text, userId);
     }
 
     public NewsUpdateDto buildNewsUpdateDto() {
-        var news = new NewsUpdateDto(id);
-        news.setText(text);
-        news.setTitle(title);
+        var news = new NewsUpdateDto(id, title, text);
         return news;
     }
 
