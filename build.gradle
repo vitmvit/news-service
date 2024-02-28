@@ -28,6 +28,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springFeignVersion}"
     implementation "ru.clevertec.news:cache-lib:${starterVersion}"
     implementation "ru.clevertec.news:dto-lib:${starterVersion}"
+    implementation "ru.clevertec.news:logging-spring-boot-starter:${starterVersion}"
     implementation "ru.clevertec.news:exception-error-handler-spring-boot-starter:${starterVersion}"
     implementation "org.postgresql:postgresql:${postgreVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.clevertec.news.annotation.Log;
 import ru.clevertec.news.dto.CommentDto;
 import ru.clevertec.news.dto.create.CommentCreateDto;
 import ru.clevertec.news.dto.update.CommentUpdateDto;
@@ -16,6 +17,7 @@ import static ru.clevertec.news.constant.Constant.OFFSET_DEFAULT;
 /**
  * Контроллер для работы с комментариями
  */
+@Log
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/comments")
