@@ -44,7 +44,7 @@ public class NewsTestBuilder {
     }
 
     public NewsUpdateDto buildNewsUpdateDto() {
-        var news = new NewsUpdateDto(id, title, text);
+        var news = new NewsUpdateDto(id, title, text, userId);
         return news;
     }
 

@@ -13,7 +13,7 @@ import static ru.clevertec.news.constant.Constant.OFFSET_DEFAULT;
 /**
  * Feign-клиент для взаимодействия с микросервисом комментариев
  */
-@FeignClient(contextId = "commentClient", value = "commentService", url = "http://localhost:8083/api/comments")
+@FeignClient(contextId = "commentClient", value = "${feign.comments-service.value}", url = "${feign.comments-service.url}")
 public interface CommentClient {
 
     /**
@@ -31,7 +31,7 @@ public interface CommentClient {
      * @param offset смещение (начальный индекс комментариев)
      * @param limit  количество комментариев на странице
      * @param id     идентификатор новости
-     * @return объект Page<CommentDto> со списком комментариев для новости
+     * @return объект Page CommentDto со списком комментариев для новости
      */
     @GetMapping("news-id/{id}")
     Page<CommentDto> getByNewsId(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,
@@ -43,7 +43,7 @@ public interface CommentClient {
      *
      * @param offset смещение (начальный индекс комментариев)
      * @param limit  количество комментариев на странице
-     * @return объект Page<CommentDto> со списком всех комментариев
+     * @return объект Page CommentDto со списком всех комментариев
      */
     @GetMapping
     Page<CommentDto> getAll(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,
@@ -55,7 +55,7 @@ public interface CommentClient {
      * @param offset   смещение (начальный индекс комментариев)
      * @param limit    количество комментариев на странице
      * @param fragment текстовый фрагмент для поиска
-     * @return объект Page<CommentDto> со списком найденных комментариев
+     * @return объект Page CommentDto со списком найденных комментариев
      */
     @GetMapping("/search/text/{text}")
     Page<CommentDto> searchByText(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,
@@ -68,7 +68,7 @@ public interface CommentClient {
      * @param offset   смещение (начальный индекс комментариев)
      * @param limit    количество комментариев на странице
      * @param fragment фрагмент имени пользователя для поиска
-     * @return объект Page<CommentDto> со списком найденных комментариев
+     * @return объект Page CommentDto со списком найденных комментариев
      */
     @GetMapping("/search/username/{username}")
     Page<CommentDto> searchByUsername(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,

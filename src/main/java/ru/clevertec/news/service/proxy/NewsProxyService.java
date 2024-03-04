@@ -5,6 +5,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.clevertec.news.cache.Cache;
 import ru.clevertec.news.dto.NewsDto;
 
@@ -13,6 +15,7 @@ import ru.clevertec.news.dto.NewsDto;
 public class NewsProxyService {
 
     private final Cache<Long, NewsDto> cache;
+    private static final Logger logger = LoggerFactory.getLogger(NewsProxyService.class);
 
     @Override
     public int hashCode() {
@@ -50,6 +53,8 @@ public class NewsProxyService {
      */
     @Around("getMethod()")
     public Object doGet(ProceedingJoinPoint pjp) throws Throwable {
+        logger.debug("Proxy news aop: get method");
+
         Long id = (Long) pjp.getArgs()[0];
         if (cache.get(id) == null) {
             NewsDto newsDto = (NewsDto) pjp.proceed();
@@ -70,6 +75,8 @@ public class NewsProxyService {
      */
     @Around("createMethod()")
     public Object doCreate(ProceedingJoinPoint pjp) throws Throwable {
+        logger.debug("Proxy news aop: post method");
+
         NewsDto newsDto = (NewsDto) pjp.proceed();
         cache.put(newsDto.getId(), newsDto);
         return newsDto;
@@ -85,6 +92,8 @@ public class NewsProxyService {
      */
     @Around("updateMethod()")
     public Object doUpdate(ProceedingJoinPoint pjp) throws Throwable {
+        logger.debug("Proxy news aop: put method");
+
         NewsDto newsDto = (NewsDto) pjp.proceed();
         cache.put(newsDto.getId(), newsDto);
         return newsDto;
@@ -100,6 +109,8 @@ public class NewsProxyService {
      */
     @Around("deleteMethod()")
     public Object doDelete(ProceedingJoinPoint pjp) throws Throwable {
+        logger.debug("Proxy news aop: delete method");
+
         Long id = (Long) pjp.getArgs()[0];
         pjp.proceed();
         cache.remove(id);

@@ -44,7 +44,7 @@ public class CommentController {
      * @param offset   смещение (начальный индекс комментариев)
      * @param limit    количество комментариев на странице
      * @param fragment текстовый фрагмент для поиска
-     * @return объект ResponseEntity со списком найденных комментариев типа Page<CommentDto> и статусом OK
+     * @return объект ResponseEntity со списком найденных комментариев типа Page CommentDto и статусом OK
      */
     @GetMapping("/search/text/{text}")
     ResponseEntity<Page<CommentDto>> searchCommentsByText(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,
@@ -61,7 +61,7 @@ public class CommentController {
      * @param offset   смещение (начальный индекс комментариев)
      * @param limit    количество комментариев на странице
      * @param fragment фрагмент имени пользователя для поиска
-     * @return объект ResponseEntity со списком найденных комментариев типа Page<CommentDto> и статусом OK
+     * @return объект ResponseEntity со списком найденных комментариев типа Page CommentDto и статусом OK
      */
     @GetMapping("/search/username/{username}")
     ResponseEntity<Page<CommentDto>> searchCommentsByUsername(@RequestParam(value = "offset", defaultValue = OFFSET_DEFAULT) Integer offset,

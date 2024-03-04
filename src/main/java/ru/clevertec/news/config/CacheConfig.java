@@ -3,6 +3,7 @@ package ru.clevertec.news.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import ru.clevertec.news.cache.Cache;
 import ru.clevertec.news.cache.impl.CacheLfu;
 import ru.clevertec.news.cache.impl.CacheLru;
@@ -17,6 +18,7 @@ import static ru.clevertec.news.constant.Variable.LRU;
  * Класс, который отвечает за конфигурацию кэша.
  */
 @Configuration
+@Profile("dev")
 public class CacheConfig {
 
     /**

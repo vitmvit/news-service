@@ -1,6 +1,8 @@
 package ru.clevertec.news.controller;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,10 @@ import static ru.clevertec.news.constant.Constant.OFFSET_DEFAULT;
 @AllArgsConstructor
 @RequestMapping("/api/news")
 public class NewsController {
+
     private final NewsService newsService;
     private final AuthClient authClient;
+    private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
     /**
      * Получение списка всех новостей с пагинацией
@@ -122,6 +126,7 @@ public class NewsController {
                     .status(HttpStatus.CREATED)
                     .body(newsService.createNews(newsCreateDto));
         }
+        logger.error("CommentService:No access error");
         throw new NoAccessError();
     }
 
@@ -141,6 +146,7 @@ public class NewsController {
                     .status(HttpStatus.OK)
                     .body(newsService.updateNews(newsUpdateDto));
         }
+        logger.error("CommentService:No access error");
         throw new NoAccessError();
     }
 
@@ -160,6 +166,7 @@ public class NewsController {
             newsService.deleteNews(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
+        logger.error("CommentService:No access error");
         throw new NoAccessError();
     }
 }

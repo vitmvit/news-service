@@ -2,6 +2,10 @@ package ru.clevertec.news.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,7 @@ public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
     private final NewsConverter newsConverter;
     private final CommentClient commentClient;
+    private static final Logger logger = LoggerFactory.getLogger(NewsServiceImpl.class);
 
     /**
      * Возвращает информацию о новости по заданному id.
@@ -35,8 +40,11 @@ public class NewsServiceImpl implements NewsService {
      * @return информация о новости
      * @throws EntityNotFoundException если новость не найдена
      */
+    @Cacheable(value = "news", key = "#id")
     @Override
     public NewsDto findNewsById(Long id) {
+        logger.info("NewsService: find news by id: " + id);
+
         var news = newsConverter.convert(newsRepository.findById(id).orElseThrow(EntityNotFoundException::new));
         news.setComments(null);
         return news;
@@ -53,6 +61,8 @@ public class NewsServiceImpl implements NewsService {
      */
     @Override
     public NewsDto findNewsByIdWithComments(Integer offset, Integer limit, Long id) {
+        logger.info("NewsService: find news with comments by id: " + id);
+
         var news = newsConverter.convert(newsRepository.findById(id).orElseThrow(EntityNotFoundException::new));
         news.setComments(commentClient.getByNewsId(offset, limit, id).stream().toList());
         return news;
@@ -68,6 +78,8 @@ public class NewsServiceImpl implements NewsService {
      */
     @Override
     public Page<NewsDto> findAllNews(Integer offset, Integer limit) {
+        logger.info("NewsService: find all news");
+
         Page<News> newsPage = newsRepository.findAll(PageRequest.of(offset, limit));
         newsPage.stream().findAny().orElseThrow(EmptyListException::new);
         return newsPage.map(newsConverter::convert);
@@ -84,6 +96,8 @@ public class NewsServiceImpl implements NewsService {
      */
     @Override
     public Page<NewsDto> searchNewsByText(Integer offset, Integer limit, String fragment) {
+        logger.info("NewsService: search news by text fragment: " + fragment);
+
         var newsPage = newsRepository.findByTextContaining(PageRequest.of(offset, limit), fragment);
         newsPage.stream().findAny().orElseThrow(EmptyListException::new);
         return newsPage.map(newsConverter::convert);
@@ -100,6 +114,8 @@ public class NewsServiceImpl implements NewsService {
      */
     @Override
     public Page<NewsDto> searchNewsByTitle(Integer offset, Integer limit, String fragment) {
+        logger.info("NewsService: search news by title fragment: " + fragment);
+
         var newsPage = newsRepository.findByTitleContaining(PageRequest.of(offset, limit), fragment);
         newsPage.stream().findAny().orElseThrow(EmptyListException::new);
         return newsPage.map(newsConverter::convert);
@@ -111,8 +127,11 @@ public class NewsServiceImpl implements NewsService {
      * @param dto данные для создания новости
      * @return созданная новость
      */
+    @CacheEvict(value = "news", key = "#dto.userId")
     @Override
     public NewsDto createNews(NewsCreateDto dto) {
+        logger.debug("NewsService: create news: " + dto);
+
         var news = newsConverter.convert(dto);
         return newsConverter.convert(newsRepository.save(news));
     }
@@ -124,8 +143,11 @@ public class NewsServiceImpl implements NewsService {
      * @return обновленная новость
      * @throws EntityNotFoundException если новость не найдена
      */
+    @CacheEvict(value = "news", key = "#newsUpdateDto.id")
     @Override
     public NewsDto updateNews(NewsUpdateDto newsUpdateDto) {
+        logger.debug("NewsService: update news: " + newsUpdateDto);
+
         var news = newsRepository.findById(newsUpdateDto.getId()).orElseThrow(EntityNotFoundException::new);
         newsConverter.merge(news, newsUpdateDto);
         return newsConverter.convert(newsRepository.save(news));
@@ -137,7 +159,10 @@ public class NewsServiceImpl implements NewsService {
      * @param id новости
      */
     @Override
+    @CacheEvict(value = "news", allEntries = true)
     public void deleteNews(Long id) {
+        logger.debug("NewsService: delete news by id: " + id);
+
         newsRepository.deleteById(id);
     }
 }

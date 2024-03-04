@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Feign-клиент для взаимодействия с микросервисом аутентификации
  */
-@FeignClient(contextId = "authClient", value = "authService", url = "http://localhost:8081/api/auth")
+@FeignClient(contextId = "authClient", value = "${feign.auth-service.value}", url = "${feign.auth-service.url}")
 public interface AuthClient {
 
     /**

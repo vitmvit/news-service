@@ -3,3 +3,31 @@ spring:
     name: news-service
   profiles:
     active: dev
+  redis:
+    port: 6379
+    host: localhost
+    cluster:
+      enabled: true
+  logging:
+    level:
+      org.springframework.web: INFO
+      guru.springframework.controllers: INFO
+      org.hibernate: INFO
+
+starter:
+  logging:
+    enabled: true
+  handler:
+    enabled: true
+
+cache:
+  algorithm: lfu
+  capacity: 15
+
+feign:
+  auth-service:
+    value: authService
+    url: http://localhost:8081/api/auth
+  comments-service:
+    value: commentService
+    url: http://localhost:8083/api/comments
