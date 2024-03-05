@@ -2,7 +2,7 @@ spring:
   application:
     name: news-service
   profiles:
-    active: dev
+    active: docker
   redis:
     port: 6379
     host: localhost

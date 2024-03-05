@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 @Configuration
-@Profile("!dev")
+@Profile({"!dev"})
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Value("${spring.redis.port}")
