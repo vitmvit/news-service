@@ -1,4 +1,11 @@
 spring:
+  application:
+    name: comments-service
+  redis:
+    port: 6379
+    host: localhost
+    cluster:
+      enabled: true
   datasource:
     username: test
     password: test
