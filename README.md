@@ -1,6 +1,8 @@
 # news-service
 
-Данный микросервис работает с новостями
+Данный микросервис работает с новостями.
+
+Является частью [этого проекта](https://github.com/vitmvit/core-service/tree/dev)
 
 ## Swagger
 
