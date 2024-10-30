@@ -1,4 +1,4 @@
-package ru.clevertec.news.model;
+package ru.clevertec.news.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-/**
- * Модель новости
- */
 @Entity
 @Getter
 @Setter
@@ -30,7 +27,6 @@ public class News {
     private LocalDateTime time;
 
     private String title;
-
     private String text;
     private Long userId;
 }

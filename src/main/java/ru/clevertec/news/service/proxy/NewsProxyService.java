@@ -1,21 +1,20 @@
 package ru.clevertec.news.service.proxy;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.clevertec.news.cache.Cache;
 import ru.clevertec.news.dto.NewsDto;
 
+@Slf4j
 @Aspect
 @AllArgsConstructor
 public class NewsProxyService {
 
     private final Cache<Long, NewsDto> cache;
-    private static final Logger logger = LoggerFactory.getLogger(NewsProxyService.class);
 
     @Override
     public int hashCode() {
@@ -27,17 +26,17 @@ public class NewsProxyService {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.createNews(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.create(..)))")
     public void createMethod() {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.updateNews(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.update(..)))")
     public void updateMethod() {
 
     }
 
-    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.deleteNews(..)))")
+    @Pointcut("execution(* ru.clevertec.news.service.impl.NewsServiceImpl.delete(..)))")
     public void deleteMethod() {
 
     }
@@ -53,11 +52,10 @@ public class NewsProxyService {
      */
     @Around("getMethod()")
     public Object doGet(ProceedingJoinPoint pjp) throws Throwable {
-        logger.debug("Proxy news aop: get method");
-
-        Long id = (Long) pjp.getArgs()[0];
+        log.debug("Proxy news aop: get method");
+        var id = (Long) pjp.getArgs()[0];
         if (cache.get(id) == null) {
-            NewsDto newsDto = (NewsDto) pjp.proceed();
+            var newsDto = (NewsDto) pjp.proceed();
             cache.put(id, newsDto);
             return newsDto;
         } else {
@@ -75,9 +73,8 @@ public class NewsProxyService {
      */
     @Around("createMethod()")
     public Object doCreate(ProceedingJoinPoint pjp) throws Throwable {
-        logger.debug("Proxy news aop: post method");
-
-        NewsDto newsDto = (NewsDto) pjp.proceed();
+        log.debug("Proxy news aop: post method");
+        var newsDto = (NewsDto) pjp.proceed();
         cache.put(newsDto.getId(), newsDto);
         return newsDto;
     }
@@ -92,9 +89,8 @@ public class NewsProxyService {
      */
     @Around("updateMethod()")
     public Object doUpdate(ProceedingJoinPoint pjp) throws Throwable {
-        logger.debug("Proxy news aop: put method");
-
-        NewsDto newsDto = (NewsDto) pjp.proceed();
+        log.debug("Proxy news aop: put method");
+        var newsDto = (NewsDto) pjp.proceed();
         cache.put(newsDto.getId(), newsDto);
         return newsDto;
     }
@@ -109,9 +105,8 @@ public class NewsProxyService {
      */
     @Around("deleteMethod()")
     public Object doDelete(ProceedingJoinPoint pjp) throws Throwable {
-        logger.debug("Proxy news aop: delete method");
-
-        Long id = (Long) pjp.getArgs()[0];
+        log.debug("Proxy news aop: delete method");
+        var id = (Long) pjp.getArgs()[0];
         pjp.proceed();
         cache.remove(id);
         return id;

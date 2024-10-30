@@ -14,9 +14,6 @@ spring:
       ddl-auto: create
 
 feign:
-  auth-service:
-    value: authService
-    url: http://localhost:9998/api/auth
   comments-service:
     value: commentService
     url: http://localhost:9998/api/comments

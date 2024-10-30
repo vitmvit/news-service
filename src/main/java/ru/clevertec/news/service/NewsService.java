@@ -1,25 +1,23 @@
 package ru.clevertec.news.service;
 
-import org.springframework.data.domain.Page;
 import ru.clevertec.news.dto.NewsDto;
 import ru.clevertec.news.dto.create.NewsCreateDto;
+import ru.clevertec.news.dto.page.PageContentDto;
+import ru.clevertec.news.dto.page.PageParamDto;
 import ru.clevertec.news.dto.update.NewsUpdateDto;
+import ru.clevertec.news.model.dto.NewsFilterDto;
 
 public interface NewsService {
 
- NewsDto findNewsById(Long id);
+    NewsDto findNewsById(Long id);
 
-    NewsDto findNewsByIdWithComments(Integer offset, Integer limit, Long id);
+    NewsDto findNewsByIdWithComments(Integer pageNumber, Integer pageSize, Long id);
 
-    Page<NewsDto> findAllNews(Integer offset, Integer limit);
+    PageContentDto<NewsDto> findAll(PageParamDto param, NewsFilterDto filter);
 
-    Page<NewsDto> searchNewsByText(Integer offset, Integer limit, String fragment);
+    NewsDto create(NewsCreateDto dto);
 
-    Page<NewsDto> searchNewsByTitle(Integer offset, Integer limit, String fragment);
+    NewsDto update(NewsUpdateDto dto);
 
-    NewsDto createNews(NewsCreateDto dto);
-
-    NewsDto updateNews(NewsUpdateDto dto);
-
-    void deleteNews(Long id);
+    void delete(Long id);
 }

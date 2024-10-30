@@ -5,7 +5,7 @@ import ru.clevertec.news.dto.CommentDto;
 import ru.clevertec.news.dto.NewsDto;
 import ru.clevertec.news.dto.create.NewsCreateDto;
 import ru.clevertec.news.dto.update.NewsUpdateDto;
-import ru.clevertec.news.model.News;
+import ru.clevertec.news.model.entity.News;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,19 +44,10 @@ public class NewsTestBuilder {
     }
 
     public NewsUpdateDto buildNewsUpdateDto() {
-        var news = new NewsUpdateDto(id, title, text, userId);
-        return news;
+        return new NewsUpdateDto(id, title, text, userId);
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public String getTitle() {
-        return title;
     }
 }
